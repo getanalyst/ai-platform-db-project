@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="ИИ-Платформа GetAnalyst — проекты, диалоги и работа с AI-моделями." />
+    <title>ИИ-Платформа · GetAnalyst</title>
+    <link rel="icon" type="image/png" href="./getanalyst-symbol.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Основная навигация">
+        <div class="brand" role="button" tabindex="0" data-action="home" aria-label="Перейти к проектам">
+          <img src="./getanalyst-symbol.png" alt="" class="brand-mark" />
+          <span class="brand-name">ИИ-Платформа</span>
+        </div>
+
+        <button class="new-chat-button" type="button" data-action="new-dialog">
+          <span class="icon-box" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" /></svg>
+          </span>
+          Новый диалог
+          <span class="shortcut">⌘ K</span>
+        </button>
+
+        <nav class="nav-list">
+          <button class="nav-item is-active" type="button" data-action="home">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h4L12 6.5h6.5A1.5 1.5 0 0 1 20 8v10.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 18.5z" /></svg>
+            Проекты
+          </button>
+        </nav>
+
+        <div class="sidebar-section">
+          <div class="sidebar-section-heading">
+            <span>Недавние</span>
+            <button class="icon-button small" type="button" data-action="create-project" aria-label="Создать проект">
+              <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" /></svg>
+            </button>
+          </div>
+          <div id="recent-projects" class="recent-projects"></div>
+        </div>
+
+        <div class="sidebar-footer">
+          <div class="avatar">ЕА</div>
+          <div class="profile-copy">
+            <strong>Екатерина</strong>
+            <span>Тариф Pro</span>
+          </div>
+          <button class="icon-button" type="button" aria-label="Настройки">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-1.42 1.42-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.04 1.56V20h-2v-.08A1.7 1.7 0 0 0 12.36 18a1.7 1.7 0 0 0-1.88.34l-.06.06L9 16.98l.06-.06A1.7 1.7 0 0 0 9.4 15a1.7 1.7 0 0 0-1.56-1.04H7.8v-2h.08A1.7 1.7 0 0 0 9.4 11a1.7 1.7 0 0 0-.34-1.88L9 9.06 10.42 7.64l.06.06a1.7 1.7 0 0 0 1.88.34A1.7 1.7 0 0 0 13.4 6.5V6h2v.08A1.7 1.7 0 0 0 16.44 8a1.7 1.7 0 0 0 1.88-.34l.06-.06L19.8 9l-.06.06A1.7 1.7 0 0 0 19.4 11a1.7 1.7 0 0 0 1.56 1.04H21v2h-.08A1.7 1.7 0 0 0 19.4 15Z" /></svg>
+          </button>
+        </div>
+      </aside>
+
+      <main id="main-content" class="main-content" tabindex="-1"></main>
+    </div>
+
+    <dialog id="project-modal" class="modal">
+      <form id="project-form" method="dialog" class="modal-card">
+        <div class="modal-heading">
+          <div>
+            <span class="eyebrow">Новый проект</span>
+            <h2>Создайте рабочее пространство</h2>
+          </div>
+          <button class="icon-button" type="button" data-action="close-modal" aria-label="Закрыть">
+            <svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" /></svg>
+          </button>
+        </div>
+
+        <label class="field">
+          <span>Название проекта</span>
+          <input id="project-name" name="name" type="text" maxlength="60" placeholder="Например, Проектирование API" required />
+        </label>
+
+        <label class="field">
+          <span>Краткое описание</span>
+          <textarea id="project-description" name="description" rows="3" maxlength="180" placeholder="Для каких задач будет использоваться проект"></textarea>
+        </label>
+
+        <label class="field">
+          <span>Системная инструкция <small>необязательно</small></span>
+          <textarea id="project-instruction" name="instruction" rows="3" maxlength="400" placeholder="Например, отвечай как ведущий системный аналитик"></textarea>
+        </label>
+
+        <div class="modal-actions">
+          <button class="button ghost" type="button" data-action="close-modal">Отмена</button>
+          <button class="button primary" type="submit">Создать проект</button>
+        </div>
+      </form>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="./app.js"></script>
+  </body>
+</html>
