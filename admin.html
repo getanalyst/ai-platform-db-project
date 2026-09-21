@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Панель администратора ИИ-Платформы GetAnalyst" />
+    <title>Администрирование · GetAnalyst</title>
+    <link rel="icon" type="image/png" href="./getanalyst-symbol.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./admin.css" />
+  </head>
+  <body>
+    <div class="admin-shell">
+      <aside class="admin-sidebar" aria-label="Навигация администратора">
+        <a class="brand" href="./admin.html" aria-label="Главная страница панели администратора">
+          <img src="./getanalyst-symbol.png" alt="" class="brand-mark" />
+          <span>
+            <strong>ИИ-Платформа</strong>
+            <small>Администрирование</small>
+          </span>
+        </a>
+
+        <nav class="admin-nav" aria-label="Разделы">
+          <button class="admin-nav-item is-active" type="button" data-view="users">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 20v-1.7a4.3 4.3 0 0 0-4.3-4.3H6.3A4.3 4.3 0 0 0 2 18.3V20M9 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM22 20v-1.7a4.3 4.3 0 0 0-3.2-4.15M16.1 2.15a4 4 0 0 1 0 7.7" /></svg>
+            Пользователи
+            <span class="nav-count">40</span>
+          </button>
+          <button class="admin-nav-item" type="button" data-view="payments">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2" /><path d="M2 10h20M6 15h3" /></svg>
+            История платежей
+          </button>
+        </nav>
+
+        <div class="sidebar-note">
+          <span class="note-dot"></span>
+          <div><strong>Демо-режим</strong><small>Данные обновлены сегодня</small></div>
+        </div>
+
+        <div class="sidebar-footer">
+          <div class="admin-avatar">ЕА</div>
+          <div class="admin-profile"><strong>Екатерина</strong><span>Главный администратор</span></div>
+          <a class="icon-button" href="./index.html" aria-label="Открыть пользовательскую платформу" title="Открыть платформу">
+            <svg viewBox="0 0 24 24"><path d="M14 3h7v7M10 14 21 3M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" /></svg>
+          </a>
+        </div>
+      </aside>
+
+      <main class="admin-main">
+        <header class="topbar">
+          <button class="mobile-menu" type="button" aria-label="Открыть меню">
+            <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+          </button>
+          <div class="breadcrumb"><span>GetAnalyst</span><b>/</b><strong id="breadcrumb-current">Пользователи</strong></div>
+          <div class="topbar-actions">
+            <button class="icon-button notification-button" type="button" aria-label="Уведомления">
+              <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM13.7 21h-3.4" /></svg>
+              <span></span>
+            </button>
+          </div>
+        </header>
+
+        <section id="users-view" class="view is-active" aria-labelledby="users-title">
+          <div class="page-heading">
+            <div><span class="eyebrow">Управление доступом</span><h1 id="users-title">Пользователи</h1><p>Аккаунты, тарифы и общий расход токенов платформы.</p></div>
+            <button class="primary-button" type="button" id="export-users">
+              <svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14" /></svg>
+              Экспорт CSV
+            </button>
+          </div>
+
+          <div class="metrics-grid" aria-label="Сводка по пользователям">
+            <article class="metric-card"><div><span>Всего пользователей</span><strong>40</strong></div><span class="metric-trend positive">+8,1%</span></article>
+            <article class="metric-card"><div><span>Платные аккаунты</span><strong>31</strong></div><span class="metric-caption">77,5% базы</span></article>
+            <article class="metric-card"><div><span>Токенов за месяц</span><strong>9,84 млн</strong></div><span class="metric-trend positive">+12,4%</span></article>
+          </div>
+
+          <section class="data-card">
+            <div class="table-toolbar">
+              <label class="search-field">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m20 20-4-4" /></svg>
+                <input id="user-search" type="search" placeholder="Найти по имени или email" />
+              </label>
+              <label class="select-field"><span>Тариф</span><select id="plan-filter"><option value="all">Все тарифы</option><option>Business</option><option>Pro</option><option>Start</option><option>Free</option></select></label>
+            </div>
+
+            <div class="table-scroll">
+              <table class="data-table users-table">
+                <thead><tr><th>Пользователь</th><th>Текущий тариф</th><th>Общий расход токенов</th><th>Статус</th><th>Регистрация</th><th><span class="sr-only">Действия</span></th></tr></thead>
+                <tbody id="users-body"></tbody>
+              </table>
+            </div>
+            <div class="table-footer"><span id="users-counter">Показано 1–20 из 40</span><div id="users-pagination" class="pagination" aria-label="Страницы пользователей"></div></div>
+          </section>
+        </section>
+
+        <section id="payments-view" class="view" aria-labelledby="payments-title">
+          <div class="page-heading">
+            <div><span class="eyebrow">Биллинг</span><h1 id="payments-title">История платежей</h1><p>Оплаченные тарифы, периоды использования и расход токенов.</p></div>
+            <button class="primary-button" type="button" id="export-payments">
+              <svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14" /></svg>
+              Экспорт CSV
+            </button>
+          </div>
+
+          <div class="metrics-grid payment-metrics" aria-label="Сводка по платежам">
+            <article class="metric-card"><div><span>Оплачено за сентябрь</span><strong>₽ 247 430</strong></div><span class="metric-trend positive">+9,7%</span></article>
+            <article class="metric-card"><div><span>Успешные платежи</span><strong>98,2%</strong></div><span class="metric-caption">55 из 56</span></article>
+            <article class="metric-card"><div><span>Средний платёж</span><strong>₽ 4 418</strong></div><span class="metric-caption">за операцию</span></article>
+          </div>
+
+          <section class="data-card">
+            <div class="table-toolbar">
+              <label class="search-field">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m20 20-4-4" /></svg>
+                <input id="payment-search" type="search" placeholder="Найти пользователя или операцию" />
+              </label>
+              <label class="select-field"><span>Статус</span><select id="payment-status-filter"><option value="all">Все статусы</option><option value="paid">Оплачен</option><option value="refunded">Возврат</option></select></label>
+            </div>
+            <div class="table-scroll">
+              <table class="data-table payments-table">
+                <thead><tr><th>Пользователь</th><th>Оплаченный тариф</th><th>Токены за период</th><th>Период</th><th>Дата оплаты</th><th>Сумма</th><th>Статус</th><th><span class="sr-only">Подробнее</span></th></tr></thead>
+                <tbody id="payments-body"></tbody>
+              </table>
+            </div>
+            <div class="table-footer"><span id="payments-counter"></span><div id="payments-pagination" class="pagination" aria-label="Страницы платежей"></div></div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <div id="overlay" class="overlay" hidden></div>
+
+    <aside id="user-drawer" class="drawer" aria-hidden="true" aria-labelledby="user-drawer-title">
+      <div class="drawer-header"><div><span class="eyebrow">Карточка пользователя</span><h2 id="user-drawer-title">Пользователь</h2></div><button class="icon-button close-drawer" type="button" aria-label="Закрыть"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" /></svg></button></div>
+      <div id="user-drawer-content" class="drawer-content"></div>
+    </aside>
+
+    <aside id="payment-drawer" class="drawer compact-drawer" aria-hidden="true" aria-labelledby="payment-drawer-title">
+      <div class="drawer-header"><div><span class="eyebrow">Платёжная операция</span><h2 id="payment-drawer-title">Детали платежа</h2></div><button class="icon-button close-drawer" type="button" aria-label="Закрыть"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" /></svg></button></div>
+      <div id="payment-drawer-content" class="drawer-content"></div>
+    </aside>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script>
+      const names = [
+        ["Екатерина Ананьева", "ekaterina@getanalyst.ru"], ["Алексей Морозов", "a.morozov@example.ru"], ["Мария Волкова", "m.volkova@example.ru"],
+        ["Илья Соколов", "i.sokolov@example.ru"], ["Анна Лебедева", "a.lebedeva@example.ru"], ["Дмитрий Орлов", "d.orlov@example.ru"],
+        ["Виктория Попова", "v.popova@example.ru"], ["Максим Козлов", "m.kozlov@example.ru"], ["Полина Новикова", "p.novikova@example.ru"],
+        ["Сергей Фёдоров", "s.fedorov@example.ru"], ["Елена Михайлова", "e.mikhailova@example.ru"], ["Артём Павлов", "a.pavlov@example.ru"],
+        ["Ольга Семёнова", "o.semenova@example.ru"], ["Роман Егоров", "r.egorov@example.ru"], ["Дарья Никитина", "d.nikitina@example.ru"],
+        ["Никита Захаров", "n.zakharov@example.ru"], ["Татьяна Белова", "t.belova@example.ru"], ["Андрей Комаров", "a.komarov@example.ru"],
+        ["София Андреева", "s.andreeva@example.ru"], ["Михаил Макаров", "m.makarov@example.ru"], ["Ксения Крылова", "k.krylova@example.ru"],
+        ["Павел Гусев", "p.gusev@example.ru"], ["Алина Титова", "a.titova@example.ru"], ["Константин Кузнецов", "k.kuznetsov@example.ru"],
+        ["Вероника Ильина", "v.ilina@example.ru"], ["Игорь Власов", "i.vlasov@example.ru"], ["Наталья Медведева", "n.medvedeva@example.ru"],
+        ["Владислав Фомин", "v.fomin@example.ru"], ["Юлия Давыдова", "u.davydova@example.ru"], ["Глеб Алексеев", "g.alekseev@example.ru"],
+        ["Людмила Степанова", "l.stepanova@example.ru"], ["Вадим Воробьёв", "v.vorobiev@example.ru"], ["Анастасия Фролова", "a.frolova@example.ru"],
+        ["Денис Баранов", "d.baranov@example.ru"], ["Инна Куликова", "i.kulikova@example.ru"], ["Евгений Жуков", "e.zhukov@example.ru"],
+        ["Валерия Савельева", "v.saveleva@example.ru"], ["Олег Романов", "o.romanov@example.ru"], ["Лилия Виноградова", "l.vinogradova@example.ru"], ["Степан Богданов", "s.bogdanov@example.ru"]
+      ];
+      const planCycle = ["Business", "Pro", "Pro", "Start", "Free"];
+      const planPrices = { Business: 9990, Pro: 4990, Start: 1990, Free: 0 };
+      const plans = { Business: { limit: "5 млн токенов", color: "violet" }, Pro: { limit: "2 млн токенов", color: "teal" }, Start: { limit: "500 тыс. токенов", color: "blue" }, Free: { limit: "50 тыс. токенов", color: "gray" } };
+      const tokenFormat = new Intl.NumberFormat("ru-RU");
+      const moneyFormat = new Intl.NumberFormat("ru-RU", { style: "currency", currency: "RUB", maximumFractionDigits: 0 });
+      const dateFormat = new Intl.DateTimeFormat("ru-RU", { day: "2-digit", month: "short", year: "numeric" });
+
+      const users = names.map(([name, email], index) => {
+        const plan = index < 3 ? ["Business", "Pro", "Start"][index] : planCycle[index % planCycle.length];
+        return { id: `usr_${String(index + 1).padStart(4, "0")}`, name, email, initials: name.split(" ").map((part) => part[0]).join(""), plan, tokens: 284000 + ((index * 187431) % 3420000), status: index === 32 ? "blocked" : "active", registered: new Date(2025, (index * 3) % 12, 2 + (index * 7) % 26), available: index < 3, phone: index < 3 ? ["+1 858 555-0147", "+7 916 555-21-43", "+7 921 555-72-11"][index] : null };
+      });
+
+      function makePayments(user, count) {
+        return Array.from({ length: count }, (_, index) => {
+          const paidAt = new Date(2026, 8 - index, 18 - (index % 4));
+          const periodFrom = new Date(paidAt.getFullYear(), paidAt.getMonth(), paidAt.getDate());
+          const periodTo = new Date(paidAt.getFullYear(), paidAt.getMonth() + 1, paidAt.getDate() - 1);
+          const plan = index > 8 && user.id === "usr_0001" ? "Pro" : user.plan;
+          return { id: `pay_${user.id.slice(-4)}_${String(index + 1).padStart(3, "0")}`, externalId: `ch_${user.id.slice(-4)}${202609 - index}`, userId: user.id, userName: user.name, userEmail: user.email, plan, tokens: Math.max(38000, user.tokens - index * 91733), periodFrom, periodTo, paidAt, amount: planPrices[plan], status: index === 5 && user.id === "usr_0001" ? "refunded" : "paid", method: index % 2 ? "Visa •••• 4821" : "Mastercard •••• 9014" };
+        });
+      }
+
+      const userPayments = { usr_0001: makePayments(users[0], 14), usr_0002: makePayments(users[1], 3), usr_0003: makePayments(users[2], 2) };
+      const extraPayments = users.slice(3, 25).map((user, index) => makePayments(user, 1)[0]);
+      const payments = [...userPayments.usr_0001.slice(0, 5), ...userPayments.usr_0002, ...userPayments.usr_0003, ...extraPayments].sort((a, b) => b.paidAt - a.paidAt);
+
+      const state = { view: "users", userPage: 1, paymentPage: 1, drawerPaymentPage: 1, activeUserId: null, userSearch: "", planFilter: "all", paymentSearch: "", paymentStatus: "all" };
+      const pageSize = 20;
+      const paymentPageSize = 10;
+      const $ = (selector) => document.querySelector(selector);
+      const $$ = (selector) => [...document.querySelectorAll(selector)];
+      const escapeHtml = (value) => String(value).replace(/[&<>'"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[char]);
+      const formatDate = (date) => dateFormat.format(date).replace(" г.", "");
+      const formatTokens = (tokens) => tokens >= 1000000 ? `${(tokens / 1000000).toFixed(2).replace(".", ",")} млн` : `${Math.round(tokens / 1000)} тыс.`;
+      const planBadge = (plan) => `<span class="plan-badge ${plans[plan].color}">${plan}</span>`;
+      const statusBadge = (status) => status === "paid" || status === "active" ? `<span class="status-badge success"><i></i>${status === "paid" ? "Оплачен" : "Активен"}</span>` : status === "refunded" ? `<span class="status-badge neutral"><i></i>Возврат</span>` : `<span class="status-badge danger"><i></i>Заблокирован</span>`;
+
+      function paginationHtml(current, total, action) {
+        if (total <= 1) return "";
+        return `<button type="button" data-${action}-page="${Math.max(1, current - 1)}" ${current === 1 ? "disabled" : ""} aria-label="Предыдущая страница"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6" /></svg></button>${Array.from({ length: total }, (_, i) => `<button type="button" data-${action}-page="${i + 1}" class="${current === i + 1 ? "is-active" : ""}">${i + 1}</button>`).join("")}<button type="button" data-${action}-page="${Math.min(total, current + 1)}" ${current === total ? "disabled" : ""} aria-label="Следующая страница"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" /></svg></button>`;
+      }
+
+      function filteredUsers() {
+        const query = state.userSearch.toLowerCase();
+        return users.filter((user) => (!query || `${user.name} ${user.email}`.toLowerCase().includes(query)) && (state.planFilter === "all" || user.plan === state.planFilter));
+      }
+
+      function renderUsers() {
+        const list = filteredUsers();
+        const totalPages = Math.max(1, Math.ceil(list.length / pageSize));
+        state.userPage = Math.min(state.userPage, totalPages);
+        const start = (state.userPage - 1) * pageSize;
+        const page = list.slice(start, start + pageSize);
+        $("#users-body").innerHTML = page.length ? page.map((user, index) => `<tr class="${user.available ? "is-clickable" : ""}" ${user.available ? `data-user-id="${user.id}" tabindex="0"` : ""}>
+          <td><div class="person-cell"><span class="table-avatar avatar-${(start + index) % 6}">${escapeHtml(user.initials)}</span><span><strong>${escapeHtml(user.name)}</strong><small>${escapeHtml(user.email)}</small></span></div></td>
+          <td>${planBadge(user.plan)}</td><td><strong class="token-value">${formatTokens(user.tokens)}</strong><small class="cell-caption">за всё время</small></td><td>${statusBadge(user.status)}</td><td>${formatDate(user.registered)}</td>
+          <td><button class="row-action" type="button" ${user.available ? `data-user-id="${user.id}" aria-label="Открыть карточку ${escapeHtml(user.name)}"` : `disabled title="Карточка доступна для первых трёх пользователей"`}><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" /></svg></button></td>
+        </tr>`).join("") : `<tr><td colspan="6"><div class="empty-state">Пользователи не найдены</div></td></tr>`;
+        $("#users-counter").textContent = list.length ? `Показано ${start + 1}–${Math.min(start + pageSize, list.length)} из ${list.length}` : "Ничего не найдено";
+        $("#users-pagination").innerHTML = paginationHtml(state.userPage, totalPages, "user");
+      }
+
+      function filteredPayments() {
+        const query = state.paymentSearch.toLowerCase();
+        return payments.filter((payment) => (!query || `${payment.userName} ${payment.userEmail} ${payment.id}`.toLowerCase().includes(query)) && (state.paymentStatus === "all" || payment.status === state.paymentStatus));
+      }
+
+      function renderPayments() {
+        const list = filteredPayments();
+        const totalPages = Math.max(1, Math.ceil(list.length / paymentPageSize));
+        state.paymentPage = Math.min(state.paymentPage, totalPages);
+        const start = (state.paymentPage - 1) * paymentPageSize;
+        const page = list.slice(start, start + paymentPageSize);
+        $("#payments-body").innerHTML = page.length ? page.map((payment) => `<tr class="is-clickable" data-payment-id="${payment.id}" tabindex="0">
+          <td><div class="person-cell compact"><span class="table-avatar mini">${escapeHtml(users.find((user) => user.id === payment.userId)?.initials || "—")}</span><span><strong>${escapeHtml(payment.userName)}</strong><small>${escapeHtml(payment.userEmail)}</small></span></div></td>
+          <td>${planBadge(payment.plan)}</td><td><strong>${formatTokens(payment.tokens)}</strong></td><td><span class="period-cell">${formatDate(payment.periodFrom)}<small>— ${formatDate(payment.periodTo)}</small></span></td><td>${formatDate(payment.paidAt)}</td><td><strong>${moneyFormat.format(payment.amount)}</strong></td><td>${statusBadge(payment.status)}</td><td><button class="row-action" type="button" data-payment-id="${payment.id}" aria-label="Открыть детали платежа"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" /></svg></button></td>
+        </tr>`).join("") : `<tr><td colspan="8"><div class="empty-state">Платежи не найдены</div></td></tr>`;
+        $("#payments-counter").textContent = list.length ? `Показано ${start + 1}–${Math.min(start + paymentPageSize, list.length)} из ${list.length}` : "Ничего не найдено";
+        $("#payments-pagination").innerHTML = paginationHtml(state.paymentPage, totalPages, "payment");
+      }
+
+      function showView(view) {
+        state.view = view;
+        $$(".view").forEach((element) => element.classList.toggle("is-active", element.id === `${view}-view`));
+        $$(".admin-nav-item").forEach((element) => element.classList.toggle("is-active", element.dataset.view === view));
+        $("#breadcrumb-current").textContent = view === "users" ? "Пользователи" : "История платежей";
+        document.title = `${view === "users" ? "Пользователи" : "История платежей"} · GetAnalyst`;
+        if (view === "payments") renderPayments(); else renderUsers();
+        $(".admin-sidebar").classList.remove("is-open");
+      }
+
+      function tariffHistory(user) {
+        const history = user.id === "usr_0001" ? [["Business", "18 сен 2026", "17 окт 2026", "Текущий"], ["Pro", "18 дек 2025", "17 сен 2026", "9 месяцев"], ["Start", "18 сен 2025", "17 дек 2025", "3 месяца"]] : user.id === "usr_0002" ? [["Pro", "12 авг 2026", "11 сен 2026", "Текущий"], ["Start", "12 июн 2026", "11 авг 2026", "2 месяца"]] : [["Start", "05 сен 2026", "04 окт 2026", "Текущий"], ["Free", "17 июл 2026", "04 сен 2026", "50 дней"]];
+        return history.map(([plan, from, to, label], index) => `<div class="timeline-item ${index === 0 ? "is-current" : ""}"><span class="timeline-dot"></span><div><div class="timeline-heading">${planBadge(plan)}<strong>${label}</strong></div><p>${from} — ${to}</p><small>${plans[plan].limit} в месяц</small></div></div>`).join("");
+      }
+
+      function renderUserDrawer(user, tab = "overview") {
+        const ownPayments = userPayments[user.id] || [];
+        $("#user-drawer-title").textContent = user.name;
+        $("#user-drawer-content").innerHTML = `<div class="profile-summary">
+          <span class="profile-avatar">${escapeHtml(user.initials)}</span><div><strong>${escapeHtml(user.name)}</strong><span>${escapeHtml(user.email)}</span><small>${user.id}</small></div>${statusBadge(user.status)}
+        </div>
+        <div class="drawer-tabs"><button type="button" data-user-tab="overview" class="${tab === "overview" ? "is-active" : ""}">Обзор</button><button type="button" data-user-tab="tariffs" class="${tab === "tariffs" ? "is-active" : ""}">История тарифов</button><button type="button" data-user-tab="payments" class="${tab === "payments" ? "is-active" : ""}">Оплаты <span>${ownPayments.length}</span></button></div>
+        <div id="user-tab-content">${userTabContent(user, tab)}</div>`;
+      }
+
+      function userTabContent(user, tab) {
+        if (tab === "tariffs") return `<section class="drawer-section"><div class="section-heading"><h3>История смены тарифов</h3><span>3 записи</span></div><div class="timeline">${tariffHistory(user)}</div></section>`;
+        if (tab === "payments") {
+          const list = userPayments[user.id] || [];
+          const totalPages = Math.max(1, Math.ceil(list.length / paymentPageSize));
+          state.drawerPaymentPage = Math.min(state.drawerPaymentPage, totalPages);
+          const start = (state.drawerPaymentPage - 1) * paymentPageSize;
+          return `<section class="drawer-section"><div class="section-heading"><h3>История оплат</h3><span>10 на странице</span></div><div class="drawer-payment-list">${list.slice(start, start + paymentPageSize).map((payment) => `<button type="button" class="drawer-payment" data-payment-id="${payment.id}"><span>${planBadge(payment.plan)}<small>${formatDate(payment.paidAt)}</small></span><span><strong>${moneyFormat.format(payment.amount)}</strong><small>${formatTokens(payment.tokens)} токенов</small></span><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" /></svg></button>`).join("")}</div><div class="drawer-pagination"><span>${start + 1}–${Math.min(start + paymentPageSize, list.length)} из ${list.length}</span><div class="pagination">${paginationHtml(state.drawerPaymentPage, totalPages, "drawer-payment")}</div></div></section>`;
+        }
+        const monthlyLimit = user.plan === "Business" ? 5000000 : user.plan === "Pro" ? 2000000 : 500000;
+        const used = Math.min(user.tokens, monthlyLimit);
+        return `<section class="drawer-section"><div class="detail-grid"><div><span>Email</span><strong>${escapeHtml(user.email)}</strong></div><div><span>Телефон</span><strong>${escapeHtml(user.phone || "Не указан")}</strong></div><div><span>Дата регистрации</span><strong>${formatDate(user.registered)}</strong></div><div><span>ID пользователя</span><strong>${user.id}</strong></div></div></section>
+          <section class="current-plan-card"><div class="current-plan-top"><div><span>Текущий тариф</span><h3>${user.plan}</h3><small>${plans[user.plan].limit} в месяц</small></div>${planBadge(user.plan)}</div><div class="usage-row"><span>Использовано в периоде</span><strong>${tokenFormat.format(used)} <small>/ ${tokenFormat.format(monthlyLimit)}</small></strong></div><div class="progress"><span style="width:${Math.min(100, Math.round(used / monthlyLimit * 100))}%"></span></div><div class="plan-dates"><span>Подключён 18 сентября</span><span>Продление 18 октября</span></div></section>
+          <section class="drawer-section"><div class="section-heading"><h3>Общий расход</h3><span>За всё время</span></div><strong class="big-token-value">${tokenFormat.format(user.tokens)} токенов</strong></section>`;
+      }
+
+      function openUser(userId) {
+        const user = users.find((item) => item.id === userId && item.available);
+        if (!user) return;
+        state.activeUserId = userId; state.drawerPaymentPage = 1;
+        renderUserDrawer(user);
+        openDrawer("#user-drawer");
+      }
+
+      function findPayment(paymentId) { return payments.find((item) => item.id === paymentId) || Object.values(userPayments).flat().find((item) => item.id === paymentId); }
+      function openPayment(paymentId) {
+        const payment = findPayment(paymentId); if (!payment) return;
+        const user = users.find((item) => item.id === payment.userId);
+        $("#payment-drawer-title").textContent = `Платёж ${payment.id}`;
+        $("#payment-drawer-content").innerHTML = `<div class="payment-hero"><span class="payment-icon"><svg viewBox="0 0 24 24"><path d="M7 13l3 3 7-8" /></svg></span><div><span>${payment.status === "paid" ? "Платёж успешно проведён" : "Средства возвращены"}</span><strong>${moneyFormat.format(payment.amount)}</strong><small>${formatDate(payment.paidAt)}</small></div></div>
+          <section class="drawer-section"><div class="section-heading"><h3>Операция</h3>${statusBadge(payment.status)}</div><dl class="operation-list"><div><dt>ID операции</dt><dd>${payment.id}</dd></div><div><dt>Внешний ID</dt><dd>${payment.externalId}</dd></div><div><dt>Способ оплаты</dt><dd>${payment.method}</dd></div><div><dt>Дата оплаты</dt><dd>${formatDate(payment.paidAt)}, 14:32</dd></div></dl></section>
+          <section class="drawer-section"><div class="section-heading"><h3>Пользователь и тариф</h3>${planBadge(payment.plan)}</div><div class="payment-user"><span class="table-avatar">${escapeHtml(user?.initials || "—")}</span><div><strong>${escapeHtml(payment.userName)}</strong><small>${escapeHtml(payment.userEmail)}</small></div></div><dl class="operation-list"><div><dt>Период тарифа</dt><dd>${formatDate(payment.periodFrom)} — ${formatDate(payment.periodTo)}</dd></div><div><dt>Расход токенов</dt><dd>${tokenFormat.format(payment.tokens)}</dd></div><div><dt>Стоимость</dt><dd>${moneyFormat.format(payment.amount)}</dd></div></dl></section>`;
+        closeDrawers(); openDrawer("#payment-drawer");
+      }
+
+      function openDrawer(selector) { $("#overlay").hidden = false; requestAnimationFrame(() => { $("#overlay").classList.add("is-visible"); $(selector).classList.add("is-open"); $(selector).setAttribute("aria-hidden", "false"); }); document.body.classList.add("drawer-open"); }
+      function closeDrawers() { $$(".drawer").forEach((drawer) => { drawer.classList.remove("is-open"); drawer.setAttribute("aria-hidden", "true"); }); $("#overlay").classList.remove("is-visible"); document.body.classList.remove("drawer-open"); setTimeout(() => { if (!$(".drawer.is-open")) $("#overlay").hidden = true; }, 220); }
+      function showToast(message) { const toast = $("#toast"); toast.textContent = message; toast.classList.add("is-visible"); clearTimeout(showToast.timer); showToast.timer = setTimeout(() => toast.classList.remove("is-visible"), 2600); }
+
+      document.addEventListener("click", (event) => {
+        const nav = event.target.closest("[data-view]"); if (nav) return showView(nav.dataset.view);
+        const userTarget = event.target.closest("[data-user-id]"); if (userTarget) return openUser(userTarget.dataset.userId);
+        const paymentTarget = event.target.closest("[data-payment-id]"); if (paymentTarget) return openPayment(paymentTarget.dataset.paymentId);
+        const userPage = event.target.closest("[data-user-page]"); if (userPage) { state.userPage = Number(userPage.dataset.userPage); renderUsers(); return; }
+        const paymentPage = event.target.closest("[data-payment-page]"); if (paymentPage) { state.paymentPage = Number(paymentPage.dataset.paymentPage); renderPayments(); return; }
+        const drawerPage = event.target.closest("[data-drawer-payment-page]"); if (drawerPage) { state.drawerPaymentPage = Number(drawerPage.dataset.drawerPaymentPage); const user = users.find((item) => item.id === state.activeUserId); $("#user-tab-content").innerHTML = userTabContent(user, "payments"); return; }
+        const tab = event.target.closest("[data-user-tab]"); if (tab) { const user = users.find((item) => item.id === state.activeUserId); renderUserDrawer(user, tab.dataset.userTab); return; }
+        if (event.target.closest(".close-drawer") || event.target.id === "overlay") return closeDrawers();
+        if (event.target.closest("#export-users")) return showToast("CSV со списком пользователей подготовлен");
+        if (event.target.closest("#export-payments")) return showToast("CSV с историей платежей подготовлен");
+        if (event.target.closest(".mobile-menu")) return $(".admin-sidebar").classList.toggle("is-open");
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeDrawers();
+        if ((event.key === "Enter" || event.key === " ") && event.target.matches("tr[data-user-id], tr[data-payment-id]")) { event.preventDefault(); event.target.click(); }
+      });
+      $("#user-search").addEventListener("input", (event) => { state.userSearch = event.target.value; state.userPage = 1; renderUsers(); });
+      $("#plan-filter").addEventListener("change", (event) => { state.planFilter = event.target.value; state.userPage = 1; renderUsers(); });
+      $("#payment-search").addEventListener("input", (event) => { state.paymentSearch = event.target.value; state.paymentPage = 1; renderPayments(); });
+      $("#payment-status-filter").addEventListener("change", (event) => { state.paymentStatus = event.target.value; state.paymentPage = 1; renderPayments(); });
+
+      renderUsers();
+    </script>
+  </body>
+</html>
